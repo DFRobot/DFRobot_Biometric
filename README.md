@@ -141,18 +141,21 @@ To use this library, first download the library file, paste it into the \Arduino
 
 ## Compatibility
 
-MCU                | Work Well    | Work Wrong   | Untested    | Remarks
------------------- | :----------: | :----------: | :---------: | -----
-Arduino uno        |      √       |              |             |
-Mega2560        |      √       |              |             |
-Leonardo        |      √       |              |             |
-ESP32           |      √       |              |             |
-micro:bit        |      √       |              |             |
+| MCU                | Work Well | Work Wrong | Untested | Remarks |
+| ------------------ | :--------: | :--------: | :------: | ------- |
+| Arduino Uno        |          |     √    |         |     unstable        |
+| Arduino Leonardo   |    √     |          |         |                     |
+| Arduino MEGA2560   |    √     |          |         |                     |
+| FireBeetle-ESP32   |    √     |          |         |                     |
+| ESP8266            |    √     |          |         |                     |
+| FireBeetle-M0      |    √     |          |         |                     |
+| Micro:bit          |          |    √     |         |                     |
+| Raspberry Pi       |    √     |          |         |                     |
 
 
 ## History
 
-- 2026/04/30 - Version 1.0.0 released.
+- 2026/05/22 - Version 1.0.0 released.
 
 ## Credits
 

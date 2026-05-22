@@ -1,7 +1,7 @@
 /*!
  * @file DFRobot_Biometric.cpp
  * @brief Define the implementation of DFRobot_Biometric class
- * @n     This is Biometric sensor that can be controlled through USART port.
+ * @details   This is Biometric sensor that can be controlled through USART port.
  * @copyright	Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license   The MIT License (MIT)
  * @author    Olive-hy
@@ -38,7 +38,8 @@ void DFRobot_Biometric::calculateChecksum(uint8_t* data, uint8_t len)
   for (uint8_t i = 2; i < len - 1; i++) {
     checkSum ^= data[i];
   }
-  data[len - 1] = checkSum;    //Write checksum value
+  //Write checksum value
+  data[len - 1] = checkSum;
 }
 
 int16_t DFRobot_Biometric::getAllNumsFaceUserIDs(void)
@@ -95,6 +96,7 @@ bool DFRobot_Biometric::waitForReply(uint8_t* buffer, uint16_t timeout)
   uint8_t  recData   = 0;
   uint32_t startTime = millis();
   while (millis() - startTime < timeout) {
+    yield();
     if (_serial.available()) {
       recData = _serial.read();
       if (bufLen < 3) {
@@ -136,13 +138,16 @@ bool DFRobot_Biometric::waitForReply(uint8_t* buffer, uint16_t timeout)
 int8_t DFRobot_Biometric::enrollUser(eUserKind_t kind, const char* userName, uint16_t* id, eIsAdmin_t isAdmin)
 {
   uint8_t nameLen = strlen(userName);
-  if (nameLen > 32) {    //Check name length
+  //Check name length
+  if (nameLen > 32) {
     return ERROR;
   }
-  if (kind != eFaceUser && kind != ePalmUser) {    //Check user type
+  //Check user type
+  if (kind != eFaceUser && kind != ePalmUser) {
     return ERROR;
   }
-  if (isAdmin != eRoleNormal && isAdmin != eRoleAdmin) {    //Check user type
+  //Check user type
+  if (isAdmin != eRoleNormal && isAdmin != eRoleAdmin) {
     return ERROR;
   }
   uint8_t data[46]    = { 0xEF, 0xAA, 0x26, 0x00, 0x28 };

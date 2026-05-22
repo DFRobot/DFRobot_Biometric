@@ -129,17 +129,18 @@ python control_led.py
 | RaspberryPi2 |           |            |    √     |         |
 | RaspberryPi3 |           |            |    √     |         |
 | RaspberryPi4 |     √     |            |          |         |
+| RaspberryPi5 |     √     |            |          |         |
 
 * Python Version
 
 | Python  | Work Well | Work Wrong | Untested | Remarks |
 | ------- | :-------: | :--------: | :------: | ------- |
-| Python2 |     √     |            |          |         |
+| Python2 |           |            |    √     |         |
 | Python3 |     √     |            |          |         |
 
 ## History
 
-- 2026/05/11 - Version 1.0.0 released.
+- 2026/05/22 - Version 1.0.0 released.
 
 ## Credits
 

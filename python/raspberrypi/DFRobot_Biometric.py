@@ -42,7 +42,7 @@ class SId:
     self.user_name = ''
 
   def __str__(self):
-    return f'id={self.id}, kind={"Face" if self.kind == DFRobot_Biometric.FACE_USER else "Palm"}, is_admin={"Adminer" if self.is_admin == 1 else "Normal user"}, user_name="{self.user_name}"'
+    return f'id={self.id}\nkind={"Face" if self.kind == DFRobot_Biometric.FACE_USER else "Palm"}\nis_admin={"Adminer" if self.is_admin == 1 else "Normal user"}\nuser_name="{self.user_name}"'
 
 
 class DFRobot_Biometric:

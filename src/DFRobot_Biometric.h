@@ -1,7 +1,7 @@
 /*!
  * @file DFRobot_Biometric.h
  * @brief Define the infrastructure of DFRobot_Biometric class
- * @n     This is Biometric sensor that can be controlled through USART port.
+ * @details   This is Biometric sensor that can be controlled through USART port.
  * @copyright	Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license The MIT License (MIT)
  * @author [Ouki](ouki.wang@dfrobot.com)
@@ -13,12 +13,10 @@
 #define __DFROBOT_BIOMETRIC_H
 #include <Arduino.h>
 
-#define CMD_CHECK_STATE            { 0xEF, 0xAA, 0x11, 0x00, 0x00, 0x11 }                                  ///< Check status command
-#define CMD_GET_FACE_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x01, 0x24 }                            ///< Get face user count command
-#define CMD_GET_FALM_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x02, 0x27 }                            ///< Get palm user count command
-#define CMD_DELETE_ALL_USER        { 0xEF, 0xAA, 0x21, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24 }    ///< Delete all users command
-#define CMD_IDENTIFY_USER          { 0xEF, 0xAA, 0x12, 0x00, 0x02, 0x00, 0x0A, 0x1A }                      ///< Identify user command
-#define CMD_GET_FACE_USER_SPECIFIC { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x00, 0x25 }                            ///< Get the specific information of the face user  command
+class DFRobot_Biometric {
+public:
+#define NO_ACK -1    ///< No response from module
+#define ERROR  -2    ///< Parameter error
 
 #define COLOR_GREEN 0x00    ///< Green light
 #define COLOR_RED   0x01    ///< Red light
@@ -26,21 +24,6 @@
 
 #define LED_OFF 0x01    ///< Turn off LED
 #define LED_ON  0x00    ///< Turn on LED
-
-#define STATUS_STANDBY 0x00    ///< Standby status
-#define STATUS_BUSY    0x01    ///< Busy status
-#define STATUS_ERROR   0x02    ///< Error status
-
-#define RESULT_OK         0x00    ///< Command executed successfully
-#define RESULT_TIMEOUT    0x0D    ///< Command execution timeout
-#define RESULT_REPEAT     0x0A    ///< Face already enrolled
-#define RESULT_NOT_FOUND  0x08    ///< User not found
-#define RESULT_UNKONW_ERR 0x05    ///< Unknown error occurred
-
-class DFRobot_Biometric {
-public:
-#define NO_ACK -1    ///< No response from module
-#define ERROR  -2    ///< Parameter error
 
   /**
    * @enum eIsAdmin_t
@@ -183,6 +166,23 @@ public:
   int8_t ledColor(uint8_t color, uint8_t kind);
 
 private:
+#define CMD_CHECK_STATE            { 0xEF, 0xAA, 0x11, 0x00, 0x00, 0x11 }                                  ///< Check status command
+#define CMD_GET_FACE_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x01, 0x24 }                            ///< Get face user count command
+#define CMD_GET_FALM_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x02, 0x27 }                            ///< Get palm user count command
+#define CMD_DELETE_ALL_USER        { 0xEF, 0xAA, 0x21, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24 }    ///< Delete all users command
+#define CMD_IDENTIFY_USER          { 0xEF, 0xAA, 0x12, 0x00, 0x02, 0x00, 0x0A, 0x1A }                      ///< Identify user command
+#define CMD_GET_FACE_USER_SPECIFIC { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x00, 0x25 }                            ///< Get the specific information of the face user  command
+
+#define STATUS_STANDBY 0x00    ///< Standby status
+#define STATUS_BUSY    0x01    ///< Busy status
+#define STATUS_ERROR   0x02    ///< Error status
+
+#define RESULT_OK         0x00    ///< Command executed successfully
+#define RESULT_TIMEOUT    0x0D    ///< Command execution timeout
+#define RESULT_REPEAT     0x0A    ///< Face already enrolled
+#define RESULT_NOT_FOUND  0x08    ///< User not found
+#define RESULT_UNKONW_ERR 0x05    ///< Unknown error occurred
+
   Stream& _serial;
 
   /**

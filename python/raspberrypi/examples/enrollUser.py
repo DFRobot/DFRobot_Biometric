@@ -1,8 +1,8 @@
 '''!
 @file enrollUser.py
-@brief Example of face or palm user enrollment on Raspberry Pi 2/3/4 (pyserial).
+@brief Example of face or palm user enrollment on Raspberry Pi 5/4 (pyserial).
 @details This example performs user enrollment every time the board is reset,
-@n and prints the enrollment result through the serial port
+@n and prints the enrollment result through the terminal
 @n Enrollment should work normally as long as the connection is correct
 @copyright   Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
 @license     The MIT License (MIT)
@@ -17,22 +17,15 @@ import time
 from DFRobot_Biometric import DFRobot_Biometric, SId
 
 if __name__ == "__main__":
-  try:
-    ser = serial.Serial(port='/dev/ttyAMA3', baudrate=115200, timeout=0.5)  # Initialize the serial port for printing information
-    ser.write(b"serial start:\r\n")
-  except Exception as e:
-    ser.write(b"serial fail:: {e}\r\n")
-    exit()
-
   bio = DFRobot_Biometric(port='/dev/serial0', baudrate=115200)  # Initialize the class object and pass in a serial port
   try:
-    ser.write(b"------------------------------------------------\r\n")
-    ser.write(b"Start connect Module...\r\n")
+    print("------------------------------------------------")
+    print("Start connect Module...")
     # Determine whether the module is ready
     while not bio.check_state():
-      ser.write(b"Connection Module Fail\r\n")
-    ser.write(b" Module is ready\r\n")
-    ser.write(b"Starting to enroll:\r\n")
+      print("Connection Module Fail")
+    print(" Module is ready")
+    print("Starting to enroll:")
     # Initialize the registered user information
     user_kind = bio.PALM_USER
     name = "zwjhy"
@@ -40,27 +33,27 @@ if __name__ == "__main__":
 
     result, id = bio.enroll_user(user_kind, name, kind_class)
     if result == 1:
-      ser.write(b"enroll success !\r\n")
-      ser.write(f"the id is: {id}\r\n".encode())
-      ser.write(f"the name is: {name}\r\n".encode())
+      print("enroll success !")
+      print(f"the id is: {id}")
+      print(f"the name is: {name}")
       if user_kind == bio.PALM_USER:
-        ser.write(b"the user kind is : PALM\r\n")
+        print("the user kind is : PALM")
       else:
-        ser.write(b"the user kind is : FACE\r\n")
+        print("the user kind is : FACE")
       if kind_class == bio.ROLE_NORMAL:
-        ser.write(b"the user class is : NORMAL USER\r\n")
+        print("the user class is : NORMAL USER")
       elif kind_class == bio.ROLE_ADMIN:
-        ser.write(b"the user class is : ADMINER\r\n")
+        print("the user class is : ADMINER")
     elif result == 2:
-      ser.write(b"face duplicate\r\n")
+      print("face duplicate")
     elif result == 3:
-      ser.write(b"Enrollment timeout\r\n")
+      print("Enrollment timeout")
     elif result == bio.ERROR:
-      ser.write(b"parameter error\r\n")
+      print("parameter error")
     else:
-      ser.write(b"Unknown error\r\n")
-    ser.write(b"------------------------------------------------\r\n")
-    ser.write(b"\r\n")
+      print("Unknown error")
+    print("------------------------------------------------")
+    print("")
     time.sleep(2)
   except KeyboardInterrupt:
     print("\n user stop the program")
