@@ -25,7 +25,7 @@
   * ----------------------------------------------------------------------------------------------------*/
 /* Baud rate cannot be changed , it is 115200 */
 
-#if defined(ESP8266) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
+#if defined(ESP8266) || defined(ARDUINO_AVR_UNO)
 #define SOFT_RX_PIN 4
 #define SOFT_TX_PIN 5
 #include <SoftwareSerial.h>
