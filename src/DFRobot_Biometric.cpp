@@ -7,16 +7,13 @@
  * @author    Olive-hy
  * @version   V1.0.0
  * @date      2026-04-30
- * @url       https://github.com/cdjq/DFRobot_Biometric
+ * @url       https://github.com/DFRobot/DFRobot_Biometric
  */
 #include "DFRobot_Biometric.h"
 
 #include <Arduino.h>
 #include <string.h>
-DFRobot_Biometric::DFRobot_Biometric(Stream& serial) : _serial(serial)
-{
-  _serial = serial;
-}
+DFRobot_Biometric::DFRobot_Biometric(Stream& serial) : _serial(serial) {}
 
 bool DFRobot_Biometric::checkState(void)
 {
@@ -58,7 +55,7 @@ int16_t DFRobot_Biometric::getAllNumsFaceUserIDs(void)
 
 int16_t DFRobot_Biometric::getAllNumsPalmUserIDs(void)
 {
-  uint8_t data[7]     = CMD_GET_FALM_USER_NUMS;
+  uint8_t data[7]     = CMD_GET_PALM_USER_NUMS;
   bool    state       = false;
   int16_t nums        = 0;
   uint8_t buffer[250] = { 0 };
@@ -139,7 +136,7 @@ int8_t DFRobot_Biometric::enrollUser(eUserKind_t kind, const char* userName, uin
 {
   uint8_t nameLen = strlen(userName);
   //Check name length
-  if (nameLen > 32) {
+  if (nameLen > 32 || nameLen == 0) {
     return ERROR;
   }
   //Check user type
@@ -214,7 +211,7 @@ int8_t DFRobot_Biometric::deleteUser(uint16_t id)
       return 1;
     } else if (buffer[6] == RESULT_NOT_FOUND) {
       return 2;
-    } else if (buffer[6] == RESULT_UNKONW_ERR) {
+    } else if (buffer[6] == RESULT_UNKNOWN_ERROR) {
       return 3;
     }
   }
@@ -230,7 +227,7 @@ int8_t DFRobot_Biometric::deleteAllUser(void)
   if (state == true) {
     if (buffer[6] == RESULT_OK) {
       return 1;
-    } else if (buffer[6] == RESULT_UNKONW_ERR) {
+    } else if (buffer[6] == RESULT_UNKNOWN_ERROR) {
       return 2;
     }
   }
@@ -244,12 +241,12 @@ int8_t DFRobot_Biometric::getRecognitionResult(sId_t* ID)
   bool    state       = false;
   state               = writeCmd(data, 8, buffer, 11000);
   if (state == true) {
-    if (buffer[6] == 0) {
+    if (buffer[6] == RESULT_OK) {
       ID->id      = buffer[7] * 256 + buffer[8];
       ID->isAdmin = (eIsAdmin_t)buffer[41];
-      if (buffer[42] == 0xC8 || buffer[42] == 0xCC) {
+      if (buffer[42] == RECOGNIZED_FACE || buffer[42] == RECOGNIZED_FACE_EYES_CLOSED) {
         ID->kind = eFaceUser;
-      } else if (buffer[42] == 0xFA) {
+      } else if (buffer[42] == RECOGNIZED_PALM) {
         ID->kind = ePalmUser;
       }
       for (uint8_t i = 0; i < 32; i++) {

@@ -3,7 +3,7 @@
 
 The FP001 and FP002 are face and palm vein recognition modules equipped with a bionic face recognition algorithm. They support UVC/UAC transmission and MJPEG video format, achieving both security and a good user experience. Featuring low power consumption, low cost, fast recognition, exquisite appearance, and compact structure, these modules utilize high-performance chips to quickly complete the entire process of face recognition and palm vein recognition.
 
-The Biometric library provides a unified encapsulation of the functions for these two modules. Compared with FP001, FP002 adds infrared detection and a controllable tri-color indicator light. It offers two user registration methods (face and palm vein) with high recognition efficiency, fast and accurate response. The library also includes an administrator user function. The recognition algorithms are executed within the module itself; this library primarily handles command interaction – sending commands, receiving feedback – and ensures timely command response.
+The Biometric library uniformly encapsulates the functions of the SEN0736 and SEN0737 modules. Both modules support face enrollment, recognition, user query, and user deletion. The SEN0737 additionally features a three-color indicator, with control functions encapsulated for each color. Algorithms run on the modules. This library handles command interaction—sending commands, receiving feedback, and ensuring timely responses。
 
 
 
@@ -150,7 +150,6 @@ To use this library, first download the library file, paste it into the \Arduino
 | ESP8266            |    √     |          |         |                     |
 | FireBeetle-M0      |    √     |          |         |                     |
 | Micro:bit          |          |    √     |         |                     |
-| Raspberry Pi       |    √     |          |         |                     |
 
 
 ## History

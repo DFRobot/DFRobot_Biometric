@@ -42,7 +42,7 @@ class SId:
     self.user_name = ''
 
   def __str__(self):
-    return f'id={self.id}\nkind={"Face" if self.kind == DFRobot_Biometric.FACE_USER else "Palm"}\nis_admin={"Adminer" if self.is_admin == 1 else "Normal user"}\nuser_name="{self.user_name}"'
+    return f'id={self.id}\nkind={"Face" if self.kind == DFRobot_Biometric.FACE_USER else "Palm"}\nis_admin={"Adminer" if self.is_admin == DFRobot_Biometric.ROLE_ADMIN else "Normal user"}\nuser_name="{self.user_name}"'
 
 
 class DFRobot_Biometric:
@@ -73,7 +73,7 @@ class DFRobot_Biometric:
   LED_ON = 0x00  ## Turn on LED
 
   ## Check status command
-  __CMD_BEGIN = bytes([0xEF, 0xAA, 0x11, 0x00, 0x00, 0x11])
+  __CMD_CHECK_STATUS = bytes([0xEF, 0xAA, 0x11, 0x00, 0x00, 0x11])
   ## Get face user count command
   __CMD_GET_FACE_USER_NUMS = bytes([0xEF, 0xAA, 0x24, 0x00, 0x01, 0x01, 0x24])
   ## Get palm user count command
@@ -86,14 +86,16 @@ class DFRobot_Biometric:
   __CMD_IDENTIFY_USER = bytes([0xEF, 0xAA, 0x12, 0x00, 0x02, 0x00, 0x0A, 0x1A])
 
   __STATUS_STANDBY = 0x00  ## Standby status
-  __STATUS_BUSY = 0x01  ## Busy status
-  __STATUS_ERROR = 0x02  ## Error status
 
   __RESULT_OK = 0x00  ## Command executed successfully
   __RESULT_TIMEOUT = 0x0D  ## Command execution timeout
   __RESULT_REPEAT = 0x0A  ## Face already enrolled
   __RESULT_NOT_FOUND = 0x08  ## User not found
-  __RESULT_UNKONW_ERR = 0x05  ## Unknown error occurred
+  __RESULT_UNKNOWN_ERROR = 0x05  ## Unknown error occurred
+
+  __RECOGNIZED_FACE = 0xC8  ## Face recognized (eyes open)
+  __RECOGNIZED_FACE_EYES_CLOSED = 0xCC  ## Face recognized (eyes closed)
+  __RECOGNIZED_PALM = 0xFA  ## Palm vein recognized
 
   def __init__(self, port='/dev/serial0', baudrate=115200, timeout=0, serial_instance=None):
     '''!
@@ -122,7 +124,7 @@ class DFRobot_Biometric:
     @retval True module ready
     @retval False module not ready
     '''
-    data = bytearray(self.__CMD_BEGIN)
+    data = bytearray(self.__CMD_CHECK_STATUS)
     buffer = bytearray(250)
     state = self.__write_cmd(data, 6, buffer, 1000)
     if state is True:
@@ -239,12 +241,12 @@ class DFRobot_Biometric:
     buffer = bytearray(250)
     state = self.__write_cmd(data, 8, buffer, 12000)
     if state is True:
-      if buffer[6] == 0:
+      if buffer[6] == self.__RESULT_OK:
         sid.id = buffer[7] * 256 + buffer[8]
         sid.is_admin = buffer[41]
-        if buffer[42] == 0xC8 or buffer[42] == 0xCC:
+        if buffer[42] == self.__RECOGNIZED_FACE or buffer[42] == self.__RECOGNIZED_FACE_EYES_CLOSED:
           sid.kind = self.FACE_USER
-        elif buffer[42] == 0xFA:
+        elif buffer[42] == self.__RECOGNIZED_PALM:
           sid.kind = self.PALM_USER
         raw = bytes(buffer[9 : 9 + 32])
         sid.user_name = raw.split(b'\x00', 1)[0].decode('utf-8', errors='replace')
@@ -257,10 +259,10 @@ class DFRobot_Biometric:
 
   def delete_user(self, user_id):
     '''!
-    @brief Delete user by id (same bounds and branches as C++: 1~500)
+    @brief Delete user by id (same bounds and branches as C++: 1~800)
     @param user_id int
     @return the result
-    @retval  1 success,2 not found,3 unknow err,NO_ACK no response,ERROR parameter error
+    @retval  1 success,2 not found,3 unknown error,NO_ACK no response,ERROR parameter error
     '''
     if user_id < 1 or user_id > 800:
       return self.ERROR
@@ -285,7 +287,7 @@ class DFRobot_Biometric:
         return 1
       if buffer[6] == self.__RESULT_NOT_FOUND:
         return 2
-      if buffer[6] == self.__RESULT_UNKONW_ERR:
+      if buffer[6] == self.__RESULT_UNKNOWN_ERROR:
         return 3
     return self.NO_ACK
 
@@ -301,7 +303,7 @@ class DFRobot_Biometric:
     if state is True:
       if buffer[6] == self.__RESULT_OK:
         return 1
-      if buffer[6] == self.__RESULT_UNKONW_ERR:
+      if buffer[6] == self.__RESULT_UNKNOWN_ERROR:
         return 2
     return self.NO_ACK
 

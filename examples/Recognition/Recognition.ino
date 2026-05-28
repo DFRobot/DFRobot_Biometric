@@ -1,8 +1,8 @@
 /*!
- * @file sen0737Recognition.ino
- * @brief Infrared detection and automatic user recognition.
- * @details This routine automatically detects targets within infrared range.
- * @n When a target is detected, it initiates user recognition and prints the user's specific information via the serial port.
+ * @file Recognition.ino
+ * @brief Continuous automatic user recognition routine for SEN0736 and SEN0737
+ * @details This routine periodically detects faces, automatically recognizes them
+ * @n and prints user details via the serial port.
  * @copyright Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license The MIT License (MIT)
  * @author [Olive](feng.yang@dfrobot.com)
@@ -37,7 +37,6 @@ SoftwareSerial ModuleSerial(SOFT_RX_PIN, SOFT_TX_PIN);
 
 DFRobot_Biometric face(ModuleSerial);
 
-#define IR_PIN 5    //Configure the infrared pin,it is up to your mcu
 void setup()
 {
 #if defined(ESP32)
@@ -46,32 +45,25 @@ void setup()
   ModuleSerial.begin(115200);
 #endif
 
-  Serial.begin(115200);      //Start serial 1, for information printing
-  pinMode(IR_PIN, INPUT);    //Configure the infrared pin as an input with a pull-down resistor.
-  delay(1500);               //Wait for module to start
+  Serial.begin(115200);    //Start serial 1, for information printing
+  delay(2000);             //Wait for module to start
 }
 
-uint8_t j = 0;
-void    loop()
+void loop()
 {
   // put your main code here, to run repeatedly:
   while (face.checkState() == false) {    //Determine whether the module is ready
     Serial.println("Module not ready !");
   }
-  if (j++ < 1) {
-    Serial.println("Module ready");
-    Serial.println("------------------------------------------------");
-  }
-  //Read IR pin: high when object is present
-  while (digitalRead(IR_PIN) == LOW) {
-    delay(500);
-  }
-  DFRobot_Biometric::sId_t user   = { 0, DFRobot_Biometric::eFaceUser, DFRobot_Biometric::eRoleNormal, { 0 } };    ///< Store the recognized user information
+  Serial.println("Module ready!");
+  Serial.println("-------------------------------------------------------------------------------");
+  DFRobot_Biometric::sId_t user   = { 0, DFRobot_Biometric::eFaceUser, DFRobot_Biometric::eRoleNormal, { 0 } };    //Store the recognized user information
   int8_t                   result = 0;
-  result                          = face.getRecognitionResult(&user);
+  Serial.println("Start recognition. Face the camera directly. Palm vein: 10-20cm, Face: 20-90cm");
+  result = face.getRecognitionResult(&user);
   //Determine the execution result
   if (result == 1) {
-    Serial.println("Success! This is imformation of the user:");
+    Serial.println("Recognition successful! The imformation of the user:");
     Serial.print("id:");
     Serial.println(user.id);
     Serial.print("userName:");
@@ -89,13 +81,13 @@ void    loop()
       Serial.println("Adminer");
     }
   } else if (result == 2) {
-    Serial.println("time out");
+    Serial.println("User recognition timeout");
   } else if (result == NO_ACK) {
     Serial.println("No response from module");
   } else if (result == 3) {
-    Serial.println("not found");
+    Serial.println("Recognized user not found");
   }
-  Serial.println("------------------------------------------------");
+  Serial.println("-------------------------------------------------------------------------------");
   Serial.println("");
-  delay(2000);
+  delay(10000);
 }

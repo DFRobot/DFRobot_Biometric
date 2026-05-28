@@ -1,8 +1,8 @@
 /*!
- * @file sen0736Recognition.ino
- * @brief Continuous automatic user recognition routine on Raspberry Pi 2/3/4 (pyserial).
- * @details This routine periodically detects faces, automatically recognizes them
- * @n and prints user details via the serial port.
+ * @file sen0737_special.ino
+ * @brief the example show some function that SEN0737 Independently owned
+ * @details When an object is detected, the module automatically starts recognition.
+ * @n The light is off when idle, turns white during recognition, green upon success, and red upon failure
  * @copyright Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license The MIT License (MIT)
  * @author [Olive](feng.yang@dfrobot.com)
@@ -12,7 +12,7 @@
  */
 
 #include "DFRobot_Biometric.h"
-
+#include "string.h"
 /* -----------------------------------------------------------------------------------------------------
   *    board   |             MCU                |   Leonardo/Mega2560/M0  |   ESP8266  |     ESP32     |
   *     VCC    |            3.3V/5V             |          VCC            |    VCC     |      VCC      |
@@ -36,6 +36,7 @@ SoftwareSerial ModuleSerial(SOFT_RX_PIN, SOFT_TX_PIN);
 #endif
 
 DFRobot_Biometric face(ModuleSerial);
+#define IR_PIN 25    //Configure the infrared pin,it is up to your mcu
 
 void setup()
 {
@@ -45,24 +46,44 @@ void setup()
   ModuleSerial.begin(115200);
 #endif
 
-  Serial.begin(115200);    //Start serial 1, for information printing
-  delay(1500);             //Wait for module to start
+  Serial.begin(115200);      //Start serial 1, for information printing
+  pinMode(IR_PIN, INPUT);    ////Configure the infrared pin as an input with a pull-down resistor
+  delay(1500);               //Wait for module to start,
 }
 
-void loop()
+uint8_t j = 0;
+void    loop()
 {
   // put your main code here, to run repeatedly:
   while (face.checkState() == false) {    //Determine whether the module is ready
-    Serial.println("Module not ready !");
+    Serial.println(" Module not ready !");
   }
-  Serial.println("Module ready!");
-  Serial.println("------------------------------------------------");
-  DFRobot_Biometric::sId_t user   = { 0, DFRobot_Biometric::eFaceUser, DFRobot_Biometric::eRoleNormal, { 0 } };    //Store the recognized user information
+  if (j++ < 1) {
+    Serial.println(" Module ready !");
+    Serial.println("-------------------------------------------------------------------------------");
+  }
+  //Power-on and normal state
+  face.ledColor(COLOR_WHITE, LED_OFF);
+  face.ledColor(COLOR_RED, LED_OFF);
+  face.ledColor(COLOR_GREEN, LED_OFF);
+  while (digitalRead(IR_PIN) == LOW) {
+    delay(500);
+  }
+  //Object detected: the white light indicates the detection state
+  face.ledColor(COLOR_GREEN, LED_OFF);
+  face.ledColor(COLOR_WHITE, LED_ON);
+  face.ledColor(COLOR_RED, LED_OFF);
+  DFRobot_Biometric::sId_t user   = { 0, DFRobot_Biometric::eFaceUser, DFRobot_Biometric::eRoleNormal, { 0 } };    ///< Store the recognized user information
   int8_t                   result = 0;
-  result                          = face.getRecognitionResult(&user);
+  Serial.println("Start recognition. Face the camera directly. Palm vein: 10-20cm, Face: 20-90cm");
+  result = face.getRecognitionResult(&user);
   //Determine the execution result
   if (result == 1) {
-    Serial.println("Success! The imformation of the user:");
+    //On successful recognition, the green indicator light stays on for two seconds
+    face.ledColor(COLOR_GREEN, LED_ON);
+    face.ledColor(COLOR_RED, LED_OFF);
+    face.ledColor(COLOR_WHITE, LED_OFF);
+    Serial.println("Success! This is imformation of the user:");
     Serial.print("id:");
     Serial.println(user.id);
     Serial.print("userName:");
@@ -79,14 +100,21 @@ void loop()
     } else if (user.isAdmin == face.eRoleAdmin) {
       Serial.println("Adminer");
     }
+    delay(2000);
   } else if (result == 2) {
-    Serial.println("time out");
+    Serial.println("User recognition timeout");
   } else if (result == NO_ACK) {
     Serial.println("No response from module");
   } else if (result == 3) {
-    Serial.println("not found");
+    Serial.println("Recognized user not found");
   }
-  Serial.println("------------------------------------------------");
+  if (result != 1) {
+    //On failed recognition, the green indicator light stays on for two seconds
+    face.ledColor(COLOR_GREEN, LED_OFF);
+    face.ledColor(COLOR_RED, LED_ON);
+    face.ledColor(COLOR_WHITE, LED_OFF);
+    delay(2000);
+  }
+  Serial.println("-------------------------------------------------------------------------------");
   Serial.println("");
-  delay(10000);
 }

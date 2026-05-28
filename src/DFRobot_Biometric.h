@@ -35,8 +35,8 @@ public:
   } eIsAdmin_t;
 
   /**
-   * @enum eIsAdmin_t
-   * @brief Whether the user is an administrator
+   * @enum eUserKind_t
+   * @brief Type of the user
    */
   typedef enum {
     eFaceUser = 0x01, /**< Face user */
@@ -76,7 +76,7 @@ public:
    * @fn enrollUser
    * @brief Enroll face or palm for recognition
    * @details Ensure that the parameters meet the requirements.
-   * @param kind eFaceUser for face enrollment, eFaceUser for palm enrollment
+   * @param kind eFaceUser for face enrollment, ePalmUser for palm enrollment
    * @param userName User name, length 1 to 32 characters
    * @param id Store the enrolled user ID, range 1 to800
    * @param idAdmin Set user role, eRoleAdmin for administrator, eRoleNormal
@@ -168,7 +168,7 @@ public:
 private:
 #define CMD_CHECK_STATE            { 0xEF, 0xAA, 0x11, 0x00, 0x00, 0x11 }                                  ///< Check status command
 #define CMD_GET_FACE_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x01, 0x24 }                            ///< Get face user count command
-#define CMD_GET_FALM_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x02, 0x27 }                            ///< Get palm user count command
+#define CMD_GET_PALM_USER_NUMS     { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x02, 0x27 }                            ///< Get palm user count command
 #define CMD_DELETE_ALL_USER        { 0xEF, 0xAA, 0x21, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24 }    ///< Delete all users command
 #define CMD_IDENTIFY_USER          { 0xEF, 0xAA, 0x12, 0x00, 0x02, 0x00, 0x0A, 0x1A }                      ///< Identify user command
 #define CMD_GET_FACE_USER_SPECIFIC { 0xEF, 0xAA, 0x24, 0x00, 0x01, 0x00, 0x25 }                            ///< Get the specific information of the face user  command
@@ -177,11 +177,15 @@ private:
 #define STATUS_BUSY    0x01    ///< Busy status
 #define STATUS_ERROR   0x02    ///< Error status
 
-#define RESULT_OK         0x00    ///< Command executed successfully
-#define RESULT_TIMEOUT    0x0D    ///< Command execution timeout
-#define RESULT_REPEAT     0x0A    ///< Face already enrolled
-#define RESULT_NOT_FOUND  0x08    ///< User not found
-#define RESULT_UNKONW_ERR 0x05    ///< Unknown error occurred
+#define RESULT_OK            0x00    ///< Command executed successfully
+#define RESULT_TIMEOUT       0x0D    ///< Command execution timeout
+#define RESULT_REPEAT        0x0A    ///< Face already enrolled
+#define RESULT_NOT_FOUND     0x08    ///< User not found
+#define RESULT_UNKNOWN_ERROR 0x05    ///< Unknown error occurred
+
+#define RECOGNIZED_FACE             0xC8    ///< Face recognized (eyes open)
+#define RECOGNIZED_FACE_EYES_CLOSED 0xCC    ///< Face recognized (eyes closed)
+#define RECOGNIZED_PALM             0xFA    ///< Palm vein recognized
 
   Stream& _serial;
 
