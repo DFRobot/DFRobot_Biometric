@@ -113,7 +113,7 @@ void                           loop()
       if (userclass == face.eRoleNormal) {
         Serial.println("Normal user");
       } else if (userclass == face.eRoleAdmin) {
-        Serial.println("Adminer");
+        Serial.println("Administrator");
       }
       if (strcmp(data, "1") == 0) {
         i++;

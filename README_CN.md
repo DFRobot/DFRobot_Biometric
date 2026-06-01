@@ -8,8 +8,11 @@
 Biometric库是对于这两个模块的功能进行统一的封装，SEN0736和SEN0737都具有人脸录入，人脸识别，用户查询，用户删除等功能。此外，SEN0737还具有三种颜色的指示灯，为其封装了三通不同颜色等的控制功能。算法在模块内完成，本库主要进行指令交互，下达命令，接受反馈，命令响应及时。
 
 
-![产品效果图片](./resources/images/SEN0736.png)
+![产品效果图片](./resources/images/SEN0736_black.png)
+![产品效果图片](./resources/images/SEN0736_white.png)
 ![产品效果图片](./resources/images/SEN0737.png)
+![产品效果图片](./resources/images/SEN0736_use.png)
+![产品效果图片](./resources/images/SEN0737_use.png)
 
 
 ## 产品链接 (www.dfrobot.com)
@@ -121,7 +124,6 @@ Biometric库是对于这两个模块的功能进行统一的封装，SEN0736和S
    * @brief 删除所有用户
    * @return 删除结果
    * @retval NO_ACK -1 没有收到模块的应答
-   * @retval ERROR  -2 用户参数错误
    * @retval 1 删除成功
    * @retval 2 未知错误，建议重试
    */

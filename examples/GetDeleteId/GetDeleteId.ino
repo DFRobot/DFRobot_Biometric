@@ -1,5 +1,5 @@
 /*!
- * @file GetDeleteId.ino
+ * @file getDeleteId.ino
  * @brief This routine implements user lookup and deletion for SEN0736 and SEN0737
  * @details This routine sends string commands over serial to the host controller
  * @n which parses and executes the corresponding actions on the module.
@@ -55,6 +55,7 @@ void    loop()
   // put your main code here, to run repeatedly:
   while (face.checkState() == false) {    //Determine whether the module is ready
     Serial.println(" Module not ready !");
+    delay(200);
   }
   if (j++ < 1) {
     Serial.println(" Module ready !");
@@ -66,9 +67,10 @@ void    loop()
     Serial.println("3          # Delete all users");
     Serial.println("-----------------------------");
   }
-  char    data[31] = { 0 };
-  int16_t nums = 0, userId = 0;
-  int8_t  result = 0;
+  char     data[31] = { 0 };
+  int16_t  nums     = 0;
+  uint16_t userId   = 0;
+  int8_t   result   = 0;
   while (!Serial.available()) {
     ;
   }
@@ -102,18 +104,41 @@ void    loop()
       ;
     }
     String inputString = Serial.readStringUntil('\n');
-    userId             = inputString.toInt();
-    if (userId <= 500) {
-      nums = face.getAllNumsFaceUserIDs();
-      uint16_t id[50];
-      face.getAllFaceUserIDs(id, 50);
-      bool idExists = false;
-      for (int16_t i = 0; i < nums; i++) {
-        if (userId == id[i]) {
-          idExists = true;
-        }
+    inputString.trim();
+    // Validate that the input is a pure integer
+    bool validInput = (inputString.length() > 0);
+    for (size_t k = 0; k < inputString.length(); k++) {
+      if (!isdigit(inputString.charAt(k))) {
+        validInput = false;
+        break;
       }
-      if (idExists == true) {
+    }
+    if (!validInput) {
+      Serial.println("Invalid ID");
+    } else {
+      userId = inputString.toInt();
+      if (userId <= 500) {
+        nums = face.getAllNumsFaceUserIDs();
+        uint16_t id[50];
+        face.getAllFaceUserIDs(id, 50);
+        bool idExists = false;
+        for (int16_t i = 0; i < nums; i++) {
+          if (userId == id[i]) {
+            idExists = true;
+          }
+        }
+        if (idExists == true) {
+          result = face.deleteUser(userId);
+          if (result == 1) {
+            Serial.print("Successful delete user:");
+            Serial.println(userId);
+          } else {
+            Serial.println("Failed to delete user");
+          }
+        } else {
+          Serial.println("The user with this ID does not exist");
+        }
+      } else if (userId > 500 && userId <= 800) {
         result = face.deleteUser(userId);
         if (result == 1) {
           Serial.print("Successful delete user:");
@@ -124,16 +149,6 @@ void    loop()
       } else {
         Serial.println("The user with this ID does not exist");
       }
-    } else if (userId > 500 && userId <= 800) {
-      result = face.deleteUser(userId);
-      if (result == 1) {
-        Serial.print("Successful delete user:");
-        Serial.println(userId);
-      } else {
-        Serial.println("Failed to delete user");
-      }
-    } else {
-      Serial.println("The user with this ID does not exist");
     }
   } else if (strcmp(data, "3") == 0) {
     result = face.deleteAllUser();

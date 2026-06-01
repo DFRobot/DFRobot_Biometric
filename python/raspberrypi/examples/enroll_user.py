@@ -59,7 +59,7 @@ def main():
           user_kind = bio.FACE_USER
           result, user_id = bio.enroll_user(user_kind, full_name, user_class)
         else:
-          print("Start palm enrollment. Please keep your face directly facing the camera, 15cm~20cm away")
+          print("Start palm enrollment. Please keep your palm directly facing the camera, 15cm~20cm away")
           full_name = f"{palm_name}{palm_count}"
           user_kind = bio.PALM_USER
           result, user_id = bio.enroll_user(user_kind, full_name, user_class)
@@ -81,7 +81,7 @@ def main():
           if user_class == bio.ROLE_NORMAL:
             print("Normal user")
           elif user_class == bio.ROLE_ADMIN:
-            print("Adminer")
+            print("Administrator")
           if cmd == "1":
             face_count += 1
           else:

@@ -69,19 +69,27 @@ def main():
           id_str = input().strip()
         except EOFError:
           id_str = ""
-        if not id_str:
-          time.sleep(0.1)
-          continue
-        user_id = int(id_str)
-        if user_id <= 500:
-          face_count = bio.get_all_nums_face_user_ids()
-          id_buffer = [0] * 50
-          bio.get_all_face_user_ids(id_buffer, 50)
-          id_exists = False
-          for idx in range(face_count):
-            if user_id == id_buffer[idx]:
-              id_exists = True
-          if id_exists:
+        if not id_str or not id_str.isdigit():
+          print("Invalid ID")
+        else:
+          user_id = int(id_str)
+          if user_id <= 500:
+            face_count = bio.get_all_nums_face_user_ids()
+            id_buffer = [0] * 50
+            bio.get_all_face_user_ids(id_buffer, 50)
+            id_exists = False
+            for idx in range(face_count):
+              if user_id == id_buffer[idx]:
+                id_exists = True
+            if id_exists:
+              result = bio.delete_user(user_id)
+              if result == 1:
+                print(f"Successful delete user:{user_id}")
+              else:
+                print("Failed to delete user")
+            else:
+              print("The user with this ID does not exist")
+          elif user_id > 500 and user_id <= 800:
             result = bio.delete_user(user_id)
             if result == 1:
               print(f"Successful delete user:{user_id}")
@@ -89,14 +97,6 @@ def main():
               print("Failed to delete user")
           else:
             print("The user with this ID does not exist")
-        elif user_id > 500 and user_id <= 800:
-          result = bio.delete_user(user_id)
-          if result == 1:
-            print(f"Successful delete user:{user_id}")
-          else:
-            print("Failed to delete user")
-        else:
-          print("The user with this ID does not exist")
       elif cmd == "3":
         result = bio.delete_all_user()
         if result == 1:

@@ -10,8 +10,11 @@ Biometric库是对于这两个模块的功能进行统一的封装，SEN0736和S
 
 
 
-![产品效果图片](../resources/images/SEN0736.png)
-![产品效果图片](../resources/images/SEN0737.png)
+![产品效果图片](../../resources/images/SEN0736_black.png)
+![产品效果图片](../../resources/images/SEN0736_white.png)
+![产品效果图片](../../resources/images/SEN0737.png)
+![产品效果图片](../../resources/images/SEN0736_use.png)
+![产品效果图片](../../resources/images/SEN0737_use.png)
 
 
 ## 产品链接（链接到中文商城）
@@ -36,7 +39,7 @@ Biometric库是对于这两个模块的功能进行统一的封装，SEN0736和S
 要使用这个库，首先将库下载到Raspberry Pi，然后打开例程文件夹。要执行一个例程demox.py，请在命令行中输入python demox.py。例如，要执行enrollUser.py例程,你需要输入:
 
 ```python
-python enrollUser.py
+python enroll_user.py
 ```
 
 

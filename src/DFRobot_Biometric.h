@@ -4,8 +4,8 @@
  * @details   This is Biometric sensor that can be controlled through USART port.
  * @copyright	Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license The MIT License (MIT)
- * @author [Ouki](ouki.wang@dfrobot.com)
- * @version V1.0
+ * @author [Olive](feng.yang@dfrobot.com)
+ * @version V1.0.0
  * @date 2026-04-30
  * @url https://github.com/DFRobot/DFRobot_Biometric
  */
@@ -78,7 +78,7 @@ public:
    * @details Ensure that the parameters meet the requirements.
    * @param kind eFaceUser for face enrollment, ePalmUser for palm enrollment
    * @param userName User name, length 1 to 32 characters
-   * @param id Store the enrolled user ID, range 1 to800
+   * @param id Store the enrolled user ID, range 1 to 800
    * @param idAdmin Set user role, eRoleAdmin for administrator, eRoleNormal
    * @return Task execution result
    * @retval NO_ACK -1 No response from module
@@ -146,7 +146,7 @@ public:
    * @fn deleteAllUser
    * @brief Delete all users
    * @return Delete result
-   * @retval NO_ACK -1 No response from module ,ERROR  -2 User parameter error
+   * @retval NO_ACK -1 No response from module
    * @retval 1 Delete success
    * @retval 2 Unknown error, suggest retry
    */

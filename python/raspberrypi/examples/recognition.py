@@ -35,7 +35,7 @@ def main():
       result = bio.get_recognition_result(my_sid)
       # Determine the execution result
       if result == 1:
-        print("Success! The imformation of the user:")
+        print("Success! The information of the user:")
         print(f"id:{my_sid.id}")
         print(f"userName:{my_sid.user_name}")
         print("user kind:", end="")
@@ -47,7 +47,7 @@ def main():
         if my_sid.is_admin == bio.ROLE_NORMAL:
           print("Normal user")
         elif my_sid.is_admin == bio.ROLE_ADMIN:
-          print("Adminer")
+          print("Administrator")
       elif result == 2:
         print("User recognition timeout")
       elif result == bio.NO_ACK:

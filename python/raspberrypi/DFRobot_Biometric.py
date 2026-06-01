@@ -5,7 +5,7 @@
 @n Connect module UART to Pi GPIO serial (e.g. /dev/serial0); disable serial console if needed.
 @copyright   Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
 @license     The MIT License (MIT)
-@author      Ported from DFRobot_Biometric C++ library
+@author      [Olive](feng.yang@dfrobot.com)
 @version     V1.0.0
 @date        2026-05-07
 @url         https://github.com/DFRobot/DFRobot_Biometric
@@ -42,7 +42,7 @@ class SId:
     self.user_name = ''
 
   def __str__(self):
-    return f'id={self.id}\nkind={"Face" if self.kind == DFRobot_Biometric.FACE_USER else "Palm"}\nis_admin={"Adminer" if self.is_admin == DFRobot_Biometric.ROLE_ADMIN else "Normal user"}\nuser_name="{self.user_name}"'
+    return f'id={self.id}\nkind={"Face" if self.kind == DFRobot_Biometric.FACE_USER else "Palm"}\nis_admin={"Administrator" if self.is_admin == DFRobot_Biometric.ROLE_ADMIN else "Normal user"}\nuser_name="{self.user_name}"'
 
 
 class DFRobot_Biometric:
@@ -62,7 +62,7 @@ class DFRobot_Biometric:
   ## Two User roles:
   ## common user
   ROLE_NORMAL = 0
-  ## adminerator user
+  ## administrator user
   ROLE_ADMIN = 1
 
   ## LED colors and states
@@ -119,7 +119,7 @@ class DFRobot_Biometric:
 
   def check_state(self):
     '''!
-    @brief Check module is ready and idle (CMD_BEGIN, STATUS_STANDBY).
+    @brief Check module is ready and idle
     @return bool True if module ready
     @retval True module ready
     @retval False module not ready
@@ -404,7 +404,3 @@ class DFRobot_Biometric:
     self.__ser.write(bytes(data[0:length]))
     state = self.__wait_for_reply(buffer, out_time_ms)
     return state
-
-
-# if __name__ == '__main__':
-#   main()

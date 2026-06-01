@@ -1,5 +1,5 @@
 /*!
- * @file sen0737_special.ino
+ * @file sen0737Special.ino
  * @brief the example show some function that SEN0737 Independently owned
  * @details When an object is detected, the module automatically starts recognition.
  * @n The light is off when idle, turns white during recognition, green upon success, and red upon failure
@@ -47,17 +47,18 @@ void setup()
 #endif
 
   Serial.begin(115200);      //Start serial 1, for information printing
-  pinMode(IR_PIN, INPUT);    ////Configure the infrared pin as an input with a pull-down resistor
+  pinMode(IR_PIN, INPUT);    //Configure the infrared pin as an input with a pull-down resistor
   delay(1500);               //Wait for module to start,
 }
-
 uint8_t j = 0;
 void    loop()
 {
   // put your main code here, to run repeatedly:
   while (face.checkState() == false) {    //Determine whether the module is ready
     Serial.println(" Module not ready !");
+    delay(200);
   }
+  //Print once on the first loop iteration
   if (j++ < 1) {
     Serial.println(" Module ready !");
     Serial.println("-------------------------------------------------------------------------------");
@@ -83,7 +84,7 @@ void    loop()
     face.ledColor(COLOR_GREEN, LED_ON);
     face.ledColor(COLOR_RED, LED_OFF);
     face.ledColor(COLOR_WHITE, LED_OFF);
-    Serial.println("Success! This is imformation of the user:");
+    Serial.println("Success! This is information of the user:");
     Serial.print("id:");
     Serial.println(user.id);
     Serial.print("userName:");
@@ -98,7 +99,7 @@ void    loop()
     if (user.isAdmin == face.eRoleNormal) {
       Serial.println("Normal user");
     } else if (user.isAdmin == face.eRoleAdmin) {
-      Serial.println("Adminer");
+      Serial.println("Administrator");
     }
     delay(2000);
   } else if (result == 2) {

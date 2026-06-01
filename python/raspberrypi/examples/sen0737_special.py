@@ -1,8 +1,8 @@
 '''!
 @file sen0737_special.py
 @brief the example show some function that SEN0737 Independently owned on Raspberry Pi 5/4 (pyserial).
-@details This routine you can
-@n which parses and executes the corresponding actions on the module.
+@details When an object is detected, the module automatically starts recognition.
+@n The light is off when idle, turns white during recognition, green upon success, and red upon failure
 @copyright   Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
 @license     The MIT License (MIT)
 @author      [Olive](feng.yang@dfrobot.com)
@@ -20,6 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from DFRobot_Biometric import DFRobot_Biometric, SId
 from gpiozero import DigitalInputDevice
 
+# Use BCM encoding
 IR_PIN = 25
 
 
@@ -27,6 +28,7 @@ def main():
   bio = DFRobot_Biometric(port='/dev/serial0', baudrate=115200)
   ir_sensor = None
   try:
+    # Use BCM encoding
     ir_sensor = DigitalInputDevice(IR_PIN, pull_up=False)
     time.sleep(1.5)
     first_run = True
@@ -35,6 +37,7 @@ def main():
       while not bio.check_state():
         print(" Module not ready !")
         time.sleep(0.2)
+      # The module is ready, only print the message at the first time
       if first_run:
         print(" Module ready !")
         print("-------------------------------------------------------------------------------")
@@ -59,7 +62,7 @@ def main():
         bio.led_color(bio.COLOR_GREEN, bio.LED_ON)
         bio.led_color(bio.COLOR_RED, bio.LED_OFF)
         bio.led_color(bio.COLOR_WHITE, bio.LED_OFF)
-        print("Success! This is imformation of the user:")
+        print("Success! This is information of the user:")
         print(f"id:{my_sid.id}")
         print(f"userName:{my_sid.user_name}")
         print("user kind:", end="")
@@ -69,7 +72,7 @@ def main():
           print("palm user")
         print("userClass:", end="")
         if my_sid.is_admin == bio.ROLE_ADMIN:
-          print("Adminer")
+          print("Administrator")
         else:
           print("Normal user")
         time.sleep(2)

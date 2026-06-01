@@ -8,8 +8,11 @@ The Biometric library uniformly encapsulates the functions of the SEN0736 and SE
 
 
 
-![Product Image](../resources/images/SEN0736.png)
-![Product Image](../resources/images/SEN0737.png)
+![Product Image](../../resources/images/SEN0736_black.png)
+![Product Image](../../resources/images/SEN0736_white.png)
+![Product Image](../../resources/images/SEN0737.png)
+![Product Image](../../resources/images/SEN0736_use.png)
+![Product Image](../../resources/images/SEN0737_use.png)
 
 
 ## Product Link (Link to DFRobot store)
@@ -33,7 +36,7 @@ Introduce the basic and special functions of this python Library.
 To use this library, first download the library to your Raspberry Pi, then navigate to the examples folder. To run an example script, such as demox.py, type python demox.py in the command line. For example, to run the enrollUser.py example, you would enter:
 
 ```python
-python control_led.py
+python enroll_user.py
 ```
 
 
@@ -42,7 +45,7 @@ python control_led.py
 
 ```python
   '''!
-      @brief Check module is ready and idle (CMD_BEGIN, STATUS_STANDBY).
+      @brief Check module is ready and idle
       @return bool True if module ready
       @retval True module ready
       @retval False module not ready

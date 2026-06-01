@@ -4,7 +4,7 @@
  * @details   This is Biometric sensor that can be controlled through USART port.
  * @copyright	Copyright (c) 2026 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license   The MIT License (MIT)
- * @author    Olive-hy
+ * @author    [Olive](feng.yang@dfrobot.com)
  * @version   V1.0.0
  * @date      2026-04-30
  * @url       https://github.com/DFRobot/DFRobot_Biometric
@@ -266,6 +266,9 @@ int8_t DFRobot_Biometric::getRecognitionResult(sId_t* ID)
 int8_t DFRobot_Biometric::ledColor(uint8_t color, uint8_t kind)
 {
   if (kind != LED_ON && kind != LED_OFF) {
+    return ERROR;
+  }
+  if (color != COLOR_GREEN && color != COLOR_RED && color != COLOR_WHITE) {
     return ERROR;
   }
   uint8_t data[8]     = { 0xEF, 0xAA, 0x90, 0x00, 0x02, 0x00, 0x00, 0x00 };

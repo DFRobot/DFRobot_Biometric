@@ -1,5 +1,5 @@
 /*!
- * @file Recognition.ino
+ * @file recognition.ino
  * @brief Continuous automatic user recognition routine for SEN0736 and SEN0737
  * @details This routine periodically detects faces, automatically recognizes them
  * @n and prints user details via the serial port.
@@ -54,6 +54,7 @@ void loop()
   // put your main code here, to run repeatedly:
   while (face.checkState() == false) {    //Determine whether the module is ready
     Serial.println("Module not ready !");
+    delay(200);
   }
   Serial.println("Module ready!");
   Serial.println("-------------------------------------------------------------------------------");
@@ -63,7 +64,7 @@ void loop()
   result = face.getRecognitionResult(&user);
   //Determine the execution result
   if (result == 1) {
-    Serial.println("Recognition successful! The imformation of the user:");
+    Serial.println("Recognition successful! The information of the user:");
     Serial.print("id:");
     Serial.println(user.id);
     Serial.print("userName:");
@@ -78,7 +79,7 @@ void loop()
     if (user.isAdmin == face.eRoleNormal) {
       Serial.println("Normal user");
     } else if (user.isAdmin == face.eRoleAdmin) {
-      Serial.println("Adminer");
+      Serial.println("Administrator");
     }
   } else if (result == 2) {
     Serial.println("User recognition timeout");

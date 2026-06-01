@@ -8,8 +8,11 @@ The Biometric library uniformly encapsulates the functions of the SEN0736 and SE
 
 
 
-![Product Image](./resources/images/SEN0736.png)
+![Product Image](./resources/images/SEN0736_black.png)
+![Product Image](./resources/images/SEN0736_white.png)
 ![Product Image](./resources/images/SEN0737.png)
+![Product Image](./resources/images/SEN0736_use.png)
+![Product Image](./resources/images/SEN0737_use.png)
 
 
 ## Product Link (www.dfrobot.com)
@@ -49,9 +52,9 @@ To use this library, first download the library file, paste it into the \Arduino
    * @fn enrollUser
    * @brief Enroll face or palm for recognition
    * @details Ensure that the parameters meet the requirements.
-   * @param kind eFaceUser for face enrollment, eFaceUser for palm enrollment
+   * @param kind eFaceUser for face enrollment, ePalmUser for palm enrollment
    * @param userName User name, length 1 to 32 characters
-   * @param id Store the enrolled user ID, range 1 to800
+   * @param id Store the enrolled user ID, range 1 to 800
    * @param idAdmin Set user role, eRoleAdmin for administrator, eRoleNormal
    * @return Task execution result
    * @retval NO_ACK -1 No response from module
@@ -119,7 +122,7 @@ To use this library, first download the library file, paste it into the \Arduino
    * @fn deleteAllUser
    * @brief Delete all users
    * @return Delete result
-   * @retval NO_ACK -1 No response from module ,ERROR  -2 User parameter error
+   * @retval NO_ACK -1 No response from module
    * @retval 1 Delete success
    * @retval 2 Unknown error, suggest retry
    */
