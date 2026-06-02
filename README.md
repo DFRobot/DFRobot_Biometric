@@ -163,8 +163,8 @@ To use this library, first download the library file, paste it into the \Arduino
 
 ## History
 
-- 2026/05/22 - Version 1.0.0 released.
+- 2026/06/02 - Version 1.0.0 released.
 
 ## Credits
 
-Written by Olive-hy(feng.yang@dfrobot.com), 2026-4-30 (Welcome to our [website](https://www.dfrobot.com/))
+Written by Olive-hy(feng.yang@dfrobot.com), 2026-6-02 (Welcome to our [website](https://www.dfrobot.com/))

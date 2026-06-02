@@ -6,7 +6,7 @@
  * @license   The MIT License (MIT)
  * @author    [Olive](feng.yang@dfrobot.com)
  * @version   V1.0.0
- * @date      2026-04-30
+ * @date      2026-06-02
  * @url       https://github.com/DFRobot/DFRobot_Biometric
  */
 #include "DFRobot_Biometric.h"

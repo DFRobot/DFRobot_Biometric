@@ -164,8 +164,8 @@ Biometric库是对于这两个模块的功能进行统一的封装，SEN0736和S
 
 ## 历史
 
-- 2026/05/22 - 1.0.0 版本
+- 2026/06/02 - 1.0.0 版本
 
 ## 创作者
 
-Written by Olive-hy(feng.yang@dfrobot.com), 2026-4-30 (Welcome to our [website](https://www.dfrobot.com/))
+Written by Olive-hy(feng.yang@dfrobot.com), 2026-6-02 (Welcome to our [website](https://www.dfrobot.com/))

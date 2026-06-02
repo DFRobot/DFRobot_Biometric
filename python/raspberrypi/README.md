@@ -149,8 +149,8 @@ python enroll_user.py
 
 ## History
 
-- 2026/05/22 - Version 1.0.0 released.
+- 2026/06/02 - Version 1.0.0 released.
 
 ## Credits
 
-Written by Olive-hy(feng.yang@dfrobot.com), 2026-5-11 (Welcome to our [website](https://www.dfrobot.com/))
+Written by Olive-hy(feng.yang@dfrobot.com), 2026-6-02 (Welcome to our [website](https://www.dfrobot.com/))
