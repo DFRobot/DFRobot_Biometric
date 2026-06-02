@@ -10,11 +10,17 @@ Biometric库是对于这两个模块的功能进行统一的封装，SEN0736和S
 
 
 
-![产品效果图片](../../resources/images/SEN0736_black.png)
-![产品效果图片](../../resources/images/SEN0736_white.png)
-![产品效果图片](../../resources/images/SEN0737.png)
-![产品效果图片](../../resources/images/SEN0736_use.png)
-![产品效果图片](../../resources/images/SEN0737_use.png)
+<table align="center">
+  <tr>
+    <td><img src="../../resources/images/SEN0736_black.png" ></td>
+    <td><img src="../../resources/images/SEN0736_white.png" ></td>
+    <td><img src="../../resources/images/SEN0737.png"       ></td>
+  </tr>
+  <tr>
+    <td><img src="../../resources/images/SEN0736_use.png"   ></td>
+    <td><img src="../../resources/images/SEN0737_use.png"   ></td>
+  </tr>
+</table>
 
 
 ## 产品链接（链接到中文商城）

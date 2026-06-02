@@ -30,6 +30,7 @@ def main():
       while not bio.check_state():
         print(" Module not ready !")
         time.sleep(0.2)
+      # The module is ready, only print the message at the first time
       if first_run:
         print(" Module ready !")
         # Command Introduction

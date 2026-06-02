@@ -57,6 +57,7 @@ void    loop()
     Serial.println(" Module not ready !");
     delay(200);
   }
+  //Print once on the first loop iteration
   if (j++ < 1) {
     Serial.println(" Module ready !");
     //Command Introduction

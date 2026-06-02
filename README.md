@@ -8,11 +8,17 @@ The Biometric library uniformly encapsulates the functions of the SEN0736 and SE
 
 
 
-![Product Image](./resources/images/SEN0736_black.png)
-![Product Image](./resources/images/SEN0736_white.png)
-![Product Image](./resources/images/SEN0737.png)
-![Product Image](./resources/images/SEN0736_use.png)
-![Product Image](./resources/images/SEN0737_use.png)
+<table align="center">
+  <tr>
+    <td><img src="./resources/images/SEN0736_black.png" ></td>
+    <td><img src="./resources/images/SEN0736_white.png" ></td>
+    <td><img src="./resources/images/SEN0737.png"       ></td>
+  </tr>
+  <tr>
+    <td><img src="./resources/images/SEN0736_use.png"   ></td>
+    <td><img src="./resources/images/SEN0737_use.png"   ></td>
+  </tr>
+</table>
 
 
 ## Product Link (www.dfrobot.com)
