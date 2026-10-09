@@ -2,7 +2,7 @@
 
 - [中文版](./README_CN.md)
 
-The FP001 and FP002 are face and palm vein recognition modules equipped with a bionic face recognition algorithm. They support UVC/UAC transmission and MJPEG video format, achieving both security and a good user experience. Featuring low power consumption, low cost, fast recognition, exquisite appearance, and compact structure, these modules utilize high-performance chips to quickly complete the entire process of face recognition and palm vein recognition.
+The FP01 and FP02 are face and palm vein recognition modules equipped with a bionic face recognition algorithm. They support UVC/UAC transmission and MJPEG video format, achieving both security and a good user experience. Featuring low power consumption, low cost, fast recognition, exquisite appearance, and compact structure, these modules utilize high-performance chips to quickly complete the entire process of face recognition and palm vein recognition.
 
 The Biometric library uniformly encapsulates the functions of the SEN0736 and SEN0737 modules. Both modules support face enrollment, recognition, user query, and user deletion. The SEN0737 additionally features a three-color indicator, with control functions encapsulated for each color. Algorithms run on the modules. This library handles command interaction—sending commands, receiving feedback, and ensuring timely responses.
 
