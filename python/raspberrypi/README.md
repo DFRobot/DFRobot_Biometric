@@ -22,7 +22,7 @@ The Biometric library uniformly encapsulates the functions of the SEN0736 and SE
 
 
 ## Product Link (Link to DFRobot store)
-    SKU: SEN0736 FP001 and SEN0737 FP002 Face and Palm Vein Recognition Modules
+    SKU: SEN0736 FP01 and SEN0737 FP02 Face and Palm Vein Recognition Modules
 
 ## Table of Contents
 
